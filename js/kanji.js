@@ -15,9 +15,10 @@ $(function () {
                                 attr("href", "http://jisho.org/kanji/details/"+list[i]).
                                 html(list[i]));
         }
-        $("#result").append($('<a target="_blank">').
-            attr("href", "http://jisho.org/kanji/details/"+list.toString().replace(/,/g, "")).html("Show all"));
-
+        if (list.length > 0) {
+            $("#result").append($('<a target="_blank">').
+                attr("href", "http://jisho.org/kanji/details/"+list.toString().replace(/,/g, "")).html("Show all"));
+        }
     });
 
 });

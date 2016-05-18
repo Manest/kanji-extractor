@@ -5,7 +5,7 @@ $(function () {
     var result_bloc = result.find("div");
     var textarea = $("#text");
 
-    var extract = function () {console.log("ok");
+    var extract = function () {
         var list = [];
         var str = $("#text").val();
         var kanji = {};

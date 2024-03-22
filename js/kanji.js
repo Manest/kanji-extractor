@@ -23,7 +23,7 @@ $(function () {
             }
         }
         for (var i = 0 ; i < str.length ; ++i) {
-            if(/^[\u4e00-\u9faf]|[\ud842\udf9f]+$/.test(str[i])) {
+            if(/^([\u4e00-\u9faf]|[\ud842\udf9f])+$/.test(str[i])) {
                 if (kanji[str[i]] == undefined) {
                     kanji[str[i]] = 1;
                     diff_arr.push(str[i]);

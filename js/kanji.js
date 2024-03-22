@@ -7,16 +7,26 @@ $(function () {
 
     var extract = function () {console.log("ok");
         var list = [];
-        var str = $("#text").val();
+        var src_str = $("#text").val();
+        var str = []
         var kanji = {};
-        var diff_str = "";
+        var diff_arr = [];
         var total = 0;
         result_bloc.html("");
+        for (var i = 0; i < src_str.length; i++) {
+            if (/[\ud842]/.test(src_str[i]) && /[\udf9f]/.test(src_str[i+1])) {
+                continue;
+            } else if (/[\udf9f]/.test(src_str[i]) && /[\ud842]/.test(src_str[i-1])) {
+                str.push(src_str[i-1] + src_str[i]);
+            } else {
+                str.push(src_str[i])
+            }
+        }
         for (var i = 0 ; i < str.length ; ++i) {
-            if(/^[\u4e00-\u9faf]+$/.test(str[i])) {
+            if(/^([\u4e00-\u9faf]|[\ud842\udf9f])+$/.test(str[i])) {
                 if (kanji[str[i]] == undefined) {
                     kanji[str[i]] = 1;
-                    diff_str += str[i];
+                    diff_arr.push(str[i]);
                 } else {
                     ++kanji[str[i]];
                 }
@@ -28,15 +38,15 @@ $(function () {
                 list.push([i, kanji[i]]);
             }
         }
-        link_bloc.html(diff_str.length+" different Kanji found<br />");
-        for (i = 0 ; i < diff_str.length ; i++) {
+        link_bloc.html(diff_arr.length+" different Kanji found<br />");
+        for (i = 0 ; i < diff_arr.length ; i++) {
             link_bloc.append($('<a target="_blank">').
-                attr("href", "http://jisho.org/search/"+diff_str[i]+"%20%23kanji").
-                html(diff_str[i]));
+                attr("href", "http://jisho.org/search/"+diff_arr[i]+"%20%23kanji").
+                html(diff_arr[i]));
         }
         if (list.length > 0) {
             link_bloc.append($('<a target="_blank">').
-                attr("href", "http://jisho.org/search/"+diff_str).html("Show all"));
+                attr("href", "http://jisho.org/search/"+diff_arr).html("Show all"));
         }
         link_bloc.append("<hr />");
 
